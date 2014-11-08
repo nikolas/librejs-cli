@@ -1,0 +1,24 @@
+#!/usr/bin/env node
+'use strict';
+
+// Provide a title to the process in `ps`
+process.title = 'librejs'
+
+var resolve = require('resolve');
+
+resolve('librejs-cli', {
+    basedir: process.cwd()
+}, function(error, projectLocalCli) {
+    var cli;
+    if (error) {
+        cli = require('../lib/cli');
+    } else {
+        cli = require(projectLocalCli);
+    }
+
+    cli({
+        cliArgs: process.argv.slice(2),
+        inputStream: process.stdin,
+        outputStream: process.stdout
+    }).then(process.exit);
+});
