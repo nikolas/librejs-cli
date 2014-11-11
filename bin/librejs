@@ -5,20 +5,21 @@
 process.title = 'librejs'
 
 var resolve = require('resolve');
+var cli = require('cli');
 
-resolve('librejs-cli', {
-    basedir: process.cwd()
-}, function(error, projectLocalCli) {
-    var cli;
-    if (error) {
-        cli = require('../lib/cli');
+cli.setUsage('librejs file.js');
+
+cli.parse();
+
+cli.main(function(args, options) {
+    if (args.length) {
+        var CLI = require('../lib/cli');
+        CLI({
+            cliArgs: process.argv.slice(2),
+            inputStream: process.stdin,
+            outputStream: process.stdout
+        }).then(process.exit);
     } else {
-        cli = require(projectLocalCli);
+        cli.error('No input file');
     }
-
-    cli({
-        cliArgs: process.argv.slice(2),
-        inputStream: process.stdin,
-        outputStream: process.stdout
-    }).then(process.exit);
 });

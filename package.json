@@ -17,10 +17,11 @@
   "license": "GPL-3.0+",
   "dependencies": {
     "acorn": "^0.9.0",
-    "resolve": "^1.0.0",
+    "cli": "^0.6.5",
     "rsvp": "^3.0.14"
   },
   "devDependencies": {
+    "jshint": "^2.5.10",
     "qunit": "^0.7.5"
   }
 }

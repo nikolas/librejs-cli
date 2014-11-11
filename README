@@ -1,0 +1,4 @@
+librejs-cli is a command line tool for GNU LibreJS.
+
+To run the tests:
+    npm test
