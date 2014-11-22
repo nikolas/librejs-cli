@@ -24,7 +24,7 @@ test('Test the Script constructor', function() {
 test('Test _checkForTriviality', function() {
     var report = this.script.analyze();
     var item;
-    for (var i=0; i < report.length; i++) {
+    for (var i = 0; i < report.length; i++) {
         if (report[i].type === 'triviality') {
             item = report[i];
             break;
