@@ -30,21 +30,32 @@ module.exports = Script;
  */
 Script.prototype.analyze = function() {
     this.report.push('Analyzing JS..');
+
+    var isTrivial = this._isTrivial();
+    var hasLicStartLicense = !!this._findLicStartLicense();
+    var hasMagnetLicense = !!this._findMagnetLicense();
+
     this.report.push(new ReportItem({
         desc: 'Is this script trivial?',
         type: 'triviality',
-        val: this._isTrivial()
+        val: isTrivial
     }));
     this.report.push(new ReportItem({
         desc: 'Is there a @licstart/@licend license?',
         type: 'lic-start-end',
-        val: !!this._findLicStartLicense()
+        val: hasLicStartLicense
     }));
     this.report.push(new ReportItem({
         desc: 'Is there a magnet license?',
         type: 'magnet-license',
-        val: !!this._findMagnetLicense()
+        val: hasMagnetLicense
     }));
+
+    this.report.passed = isTrivial;
+    if (isTrivial === false) {
+        this.report.passed = hasLicStartLicense || hasMagnetLicense;
+    }
+
     return this.report;
 };
 

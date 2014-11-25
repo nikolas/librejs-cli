@@ -11,8 +11,14 @@ var OPTIONS = {
 };
 
 var exports = {
+    /**
+     * Run the analysis.
+     *
+     * Returns true if it passes, false otherwise.
+     */
     run: function(environment) {
         var args = environment.args;
+        var passed = false;
 
         if (args.length > 0) {
             var arg = args[0];
@@ -28,9 +34,12 @@ var exports = {
                 } else if (arg.match(/\.html$/)) {
                     report = analyzer.analyzeHtml();
                 }
+                passed = report.passed;
                 console.log('report:', report);
             }
         }
+
+        return passed;
     },
 
     /**
@@ -46,12 +55,12 @@ var exports = {
 
         cli.main(function(args, options) {
             if (args.length) {
-                exports.run({
+                var passed = exports.run({
                     args: process.argv.slice(2),
                     inputStream: process.stdin,
                     outputStream: process.stdout
                 });
-                process.exit();
+                process.exit(passed ? 0 : 2);
             } else {
                 cli.error('No input file');
             }

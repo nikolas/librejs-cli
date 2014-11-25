@@ -7,8 +7,8 @@ function Report(options) {
     // 'js' or 'html'
     this.type = 'js';
 
-    // success if the script is free, false if nonfree scripts found
-    this.isSuccess = true;
+    // false if nonfree scripts found
+    this.passed = false;
 
     this.items = [];
 }
