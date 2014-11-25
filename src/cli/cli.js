@@ -7,7 +7,8 @@ var path = require('path');
 var LibrejsAnalyzer = require('../librejs-analyzer/librejs-analyzer');
 
 var OPTIONS = {
-    'verbose': ['V', 'Show additional info during analysis']
+    'verbose': ['V', 'Show additional info during analysis'],
+    'quiet': ['q', 'Run the analysis yielding nothing but a return code']
 };
 
 var exports = {
@@ -35,7 +36,15 @@ var exports = {
                     report = analyzer.analyzeHtml();
                 }
                 passed = report.passed;
-                console.log('report:', report);
+                report.forEach(function(item) {
+                    if (typeof item.desc !== 'undefined' &&
+                        typeof item.val !== 'undefined'
+                       ) {
+                        console.log(item.desc, '\t', item.val);
+                    } else {
+                        console.log(item);
+                    }
+                });
             }
         }
 
