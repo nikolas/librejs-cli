@@ -2,8 +2,12 @@
   "name": "librejs-cli",
   "version": "0.0.1",
   "description": "Command line tool for GNU LibreJS",
-  "main": "lib/cli/index.js",
+  "bin": {
+    "librejs": "./bin/librejs"
+  },
+  "main": "src/cli/cli.js",
   "scripts": {
+    "pretest": "jshint src",
     "test": "node tests/runner"
   },
   "repository": {

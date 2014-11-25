@@ -4,22 +4,4 @@
 // Provide a title to the process in `ps`
 process.title = 'librejs'
 
-var cli = require('cli');
-
-cli.setUsage('librejs file.js');
-
-cli.parse();
-
-cli.main(function(args, options) {
-    if (args.length) {
-        var CLI = require('../lib/cli');
-        CLI({
-            cliArgs: process.argv.slice(2),
-            inputStream: process.stdin,
-            outputStream: process.stdout
-        });
-        process.exit();
-    } else {
-        cli.error('No input file');
-    }
-});
+require('../src/cli/cli.js').interpret(process.argv);

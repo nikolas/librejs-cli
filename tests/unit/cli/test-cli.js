@@ -1,7 +1,7 @@
-test('Test that cli works', 3, function() {
-    ok(CLI);
-    ok(true, 'this test is fine');
+test('Test that cli works', function() {
+    ok(run);
+    ok(interpret);
 
-    var cli = new CLI();
-    equal(typeof cli.run, 'function');
+    equal(typeof run, 'function');
+    equal(typeof interpret, 'function');
 });
