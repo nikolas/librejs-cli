@@ -60,9 +60,32 @@ Script.prototype.analyze = function() {
 };
 
 /**
- * Check if this script is considered trivial.
+ * @method _isTrivial
  *
- * @method _checkForTriviality
+ * Check if this script is considered trivial. The following is from the
+ * LibreJS 6.0.6 manual.
+ *
+ *    LibreJS considers JavaScript on a page nontrivial if any of the
+ *    following are true:
+ *
+ *  * It makes an AJAX request or is loaded along with scripts that make
+ *    an AJAX request,
+ *
+ *  * It loads external scripts dynamically or is loaded along with
+ *    scripts that do,
+ *
+ *  * It defines functions or methods and either loads an external script
+ *    (from HTML) or is loaded as one,
+ *
+ *  * It uses dynamic JavaScript constructs that are difficult to analyze
+ *    without interpreting the program or is loaded along with scripts
+ *    that use such constructs.  These constructs are:
+ *       * Using the eval function
+ *       * Calling methods with the square bracket notation
+ *       * Using any other construct than a string literal with certain
+ *         methods ('Obj.write', 'Obj.createElement', ...).
+ *
+ *
  * @return {boolean}
  */
 Script.prototype._isTrivial = function() {
@@ -76,9 +99,17 @@ Script.prototype._isTrivial = function() {
     // Search the AST created by acorn for a function declaration
     var hasFunction = util.deepFindInObject(
         node, 'type', 'FunctionExpression');
-
     if (hasFunction) {
-        isTrivial = false;
+        this.isTrivial = false;
+        return this.isTrivial;
+    }
+
+    // FIXME this works for now but should also check if type == Identifier
+    var hasEval = util.deepFindInObject(
+        node, 'name', 'eval');
+    if (hasEval) {
+        this.isTrivial = false;
+        return this.isTrivial;
     }
 
     this.isTrivial = isTrivial;

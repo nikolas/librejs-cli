@@ -33,6 +33,23 @@ test('Test _isTrivial false with function', function() {
     strictEqual(item.val, false);
 });
 
+test('Test _isTrivial false with eval', function() {
+    var js = fs.readFileSync('./tests/mock/js/eval.js', {
+        encoding: 'utf-8'
+    });
+    this.script = new Script({data: js});
+
+    var report = this.script.analyze();
+    var item;
+    for (var i = 0; i < report.length; i++) {
+        if (report[i].type === 'triviality') {
+            item = report[i];
+            break;
+        }
+    }
+    strictEqual(item.val, false);
+});
+
 test('Test _isTrivial true', function() {
     var js = 'console.log(1 + 2);';
     var script = new Script({data: js});
