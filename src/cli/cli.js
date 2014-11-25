@@ -2,12 +2,17 @@
 
 var cli = require('cli');
 var fs = require('fs');
+var path = require('path');
 
 var LibrejsAnalyzer = require('../librejs-analyzer/librejs-analyzer');
 
+var OPTIONS = {
+    'verbose': ['V', 'Show additional info during analysis']
+};
+
 var exports = {
     run: function(environment) {
-        var args = environment.cliArgs;
+        var args = environment.args;
 
         if (args.length > 0) {
             var arg = args[0];
@@ -31,15 +36,18 @@ var exports = {
     /**
      * Program entrance
      */
-    interpret: function(args) {
+    interpret: function() {
         cli.setUsage('librejs file.js');
-        cli.parse();
-        //var args = environment.cliArgs;
+
+        cli.enable('version', 'help');
+        cli.setApp(path.resolve(__dirname + '/../../package.json'));
+
+        cli.parse(OPTIONS);
 
         cli.main(function(args, options) {
             if (args.length) {
                 exports.run({
-                    cliArgs: process.argv.slice(2),
+                    args: process.argv.slice(2),
                     inputStream: process.stdin,
                     outputStream: process.stdout
                 });
