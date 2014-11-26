@@ -7,7 +7,7 @@
   },
   "main": "src/cli/cli.js",
   "scripts": {
-    "pretest": "jshint src",
+    "pretest": "jscs src && jshint src",
     "test": "node tests/runner"
   },
   "repository": {
