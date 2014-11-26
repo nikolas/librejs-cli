@@ -23,6 +23,7 @@ var exports = {
 
         if (args.length > 0) {
             var arg = args[0];
+            console.log('Analyzing: ' + arg);
             if (fs.existsSync(arg) && fs.statSync(arg).isFile()) {
                 var contents = fs.readFileSync(arg, {encoding: 'utf-8'});
                 var analyzer = new LibrejsAnalyzer({

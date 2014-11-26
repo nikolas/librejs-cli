@@ -13,7 +13,6 @@ function LibrejsAnalyzer(options) {
 module.exports = LibrejsAnalyzer;
 
 LibrejsAnalyzer.prototype.analyzeJs = function() {
-    console.info('creating Script');
     var script = new Script({
         data: this.data
     });
@@ -22,7 +21,6 @@ LibrejsAnalyzer.prototype.analyzeJs = function() {
 };
 
 LibrejsAnalyzer.prototype.analyzeHtml = function() {
-    console.info('creating HtmlAnalyzer');
     var doc = new Document({
         data: this.data
     });
