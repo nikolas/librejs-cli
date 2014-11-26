@@ -4,6 +4,7 @@ var testrunner = require('qunit');
 
 testrunner.setup({
     log: {
+        errors: true,
         globalSummary: true
     }
 });
