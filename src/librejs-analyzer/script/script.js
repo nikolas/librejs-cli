@@ -1,7 +1,7 @@
 'use strict';
 
 var util = require('../util/util');
-var AstAnalysis = require('./ast-analysis');
+var AstAnalyzer = require('./ast-analyzer');
 var LicStartEndLicense = require('./lic-start-end-license');
 var MagnetLicense = require('./magnet-license');
 var ReportItem = require('../report/report-item');
@@ -92,16 +92,14 @@ Script.prototype._isTrivial = function() {
 
     // Parse the script to see if it's trivial, i.e. does it contain any
     // functions? Does it use eval?
-    var astAnalysis = new AstAnalysis(this.data);
+    var astAnalyzer = new AstAnalyzer(this.data);
 
-    // Search the AST created by acorn for a function declaration
-    if (astAnalysis.hasFunction()) {
+    if (astAnalyzer.hasFunction()) {
         this.isTrivial = false;
         return this.isTrivial;
     }
 
-    // FIXME this works for now but should also check if type == Identifier
-    if (astAnalysis.hasEval()) {
+    if (astAnalyzer.hasEval()) {
         this.isTrivial = false;
         return this.isTrivial;
     }
