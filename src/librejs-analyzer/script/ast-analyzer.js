@@ -40,9 +40,16 @@ module.exports = AstAnalyzer;
  * @return {boolean}
  */
 AstAnalyzer.prototype.hasFunction = function() {
-    // Search the AST created by acorn for a function declaration
+    // Search the AST created by acorn for a function expression or declaration
     var hasFunction = util.deepFindInObject(
         this.node, 'type', 'FunctionExpression');
+
+    if (hasFunction) {
+        return !!hasFunction;
+    }
+
+    hasFunction = util.deepFindInObject(
+        this.node, 'type', 'FunctionDeclaration');
 
     return !!hasFunction;
 };
