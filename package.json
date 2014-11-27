@@ -7,7 +7,7 @@
   },
   "main": "src/cli/cli.js",
   "scripts": {
-    "pretest": "jscs src && jshint src",
+    "pretest": "./node_modules/.bin/jscs src && ./node_modules/.bin/jshint src",
     "test": "node tests/runner"
   },
   "repository": {
@@ -24,6 +24,7 @@
     "cli": "^0.6.5"
   },
   "devDependencies": {
+    "jscs": "^1.8.0",
     "jshint": "^2.5.10",
     "qunit": "^0.7.5"
   }
