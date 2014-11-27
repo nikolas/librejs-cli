@@ -86,7 +86,7 @@ Script.prototype.analyze = function() {
 };
 
 /**
- * @method _isTrivial
+ * @function _isTrivial
  *
  * Check if this script is considered trivial. The following is from the
  * LibreJS 6.0.6 manual.
@@ -112,13 +112,10 @@ Script.prototype.analyze = function() {
  *         methods ('Obj.write', 'Obj.createElement', ...).
  *
  *
- * @return {boolean}
+ * @return {Boolean}
  */
 Script.prototype._isTrivial = function() {
     var isTrivial = true;
-
-    // Parse the script to see if it's trivial, i.e. does it contain any
-    // functions? Does it use eval?
     var astAnalyzer = new AstAnalyzer(this.data);
 
     /*
@@ -139,7 +136,7 @@ Script.prototype._isTrivial = function() {
      *  * It defines functions or methods and either loads an external script
      *    (from HTML) or is loaded as one,
      */
-    if (astAnalyzer.hasFunction()) {
+    if (this.isExternal && astAnalyzer.hasFunction()) {
         this.isTrivial = false;
         return this.isTrivial;
     }
@@ -170,7 +167,7 @@ Script.prototype._isTrivial = function() {
  * Look for licstart/licend license. Warn if more than one is found.
  *
  * @method _findLicStartLicense
- * @return {object}
+ * @return {Object}
  */
 Script.prototype._findLicStartLicense = function() {
     var licStartEndRe =
@@ -188,7 +185,7 @@ Script.prototype._findLicStartLicense = function() {
  * Look for magnet link. Warn if more than one is found.
  *
  * @method _findMagnetLicense
- * @return {object}
+ * @return {Object}
  */
 Script.prototype._findMagnetLicense = function() {
     var licenseMagnet = /.*@license ?(magnet\:\?xt=urn\:btih\:[0-9A-Za-z]+).*/;
