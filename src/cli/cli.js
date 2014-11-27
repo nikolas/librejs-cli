@@ -23,6 +23,7 @@
 var cli = require('cli');
 var fs = require('fs');
 var path = require('path');
+var sprintf = require('sprintf-js');
 
 var LibrejsAnalyzer = require('../librejs-analyzer/librejs-analyzer');
 
@@ -41,7 +42,6 @@ var exports = {
      */
     run: function(environment) {
         var args = environment.args;
-        console.log(args);
         var passed = false;
 
         var files = args;
@@ -49,8 +49,11 @@ var exports = {
             return false;
         }
 
-        files.forEach(function(file) {
-            console.log('Analyzing: ' + file);
+        files.forEach(function(file, idx) {
+            if (idx !== 0) {
+                console.log();
+            }
+            console.log(file);
             if (fs.existsSync(file) && fs.statSync(file).isFile()) {
                 var contents = fs.readFileSync(file, {encoding: 'utf-8'});
                 var analyzer = new LibrejsAnalyzer({
@@ -70,7 +73,10 @@ var exports = {
                     if (typeof item.desc !== 'undefined' &&
                         typeof item.val !== 'undefined'
                        ) {
-                        console.log(item.desc, '\t', item.val);
+                        console.log(
+                            sprintf.sprintf('%(desc)-30s\t%(val).1s', item));
+                    } else if (typeof item === 'string') {
+                        console.log(sprintf.sprintf('%s', item));
                     } else {
                         console.log(item);
                     }

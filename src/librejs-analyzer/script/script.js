@@ -60,17 +60,17 @@ Script.prototype.analyze = function() {
     var hasMagnetLicense = !!this._findMagnetLicense();
 
     this.report.push(new ReportItem({
-        desc: 'Is this script trivial?',
+        desc: 'Trivial',
         type: 'triviality',
         val: isTrivial
     }));
     this.report.push(new ReportItem({
-        desc: 'Is there a @licstart/@licend license?',
+        desc: 'Has @licstart/@licend license',
         type: 'lic-start-end',
         val: hasLicStartLicense
     }));
     this.report.push(new ReportItem({
-        desc: 'Is there a magnet license?',
+        desc: 'Has magnet license',
         type: 'magnet-license',
         val: hasMagnetLicense
     }));
