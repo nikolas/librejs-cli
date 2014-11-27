@@ -81,6 +81,11 @@ var exports = {
                         console.log(item);
                     }
                 });
+                console.log(sprintf.sprintf('%\'-33s', ''));
+                console.log(
+                    report.passed ?
+                        'Passed' :
+                        'Failed (no license found, and nontrivial)');
             }
         });
 
