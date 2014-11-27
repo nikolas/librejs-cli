@@ -28,6 +28,8 @@ var ReportItem = require('../report/report-item');
 
 /**
  * `LibrejsAnalyzer.Script` is responsible for analyzing JavaScript.
+ *
+ * @constructor
  */
 function Script(options) {
     if (typeof options === 'undefined') {
@@ -35,17 +37,22 @@ function Script(options) {
     }
     this.data = options.data;
     this.report = [];
+
+    // Is this script loaded from a <script> tag, or via XHR?
+    this.isExternal = true;
+
+    // This will be updated when you call isTrivial()
     this.isTrivial = false;
 }
 
 module.exports = Script;
 
 /**
+ * @function analyze
+ *
  * Run the script analysis.
  *
- * Returns an array of reports.
- *
- * @return {array}
+ * @return {Report}
  */
 Script.prototype.analyze = function() {
     this.report.push('Analyzing JS..');
@@ -114,15 +121,46 @@ Script.prototype._isTrivial = function() {
     // functions? Does it use eval?
     var astAnalyzer = new AstAnalyzer(this.data);
 
+    /*
+     *  * It makes an AJAX request or is loaded along with scripts that make
+     *    an AJAX request,
+     */
+    if (astAnalyzer.createsXhr()) {
+        this.isTrivial = false;
+        return this.isTrivial;
+    }
+
+    /*
+     *  * It loads external scripts dynamically or is loaded along with
+     *    scripts that do,
+     */
+
+    /*
+     *  * It defines functions or methods and either loads an external script
+     *    (from HTML) or is loaded as one,
+     */
     if (astAnalyzer.hasFunction()) {
         this.isTrivial = false;
         return this.isTrivial;
     }
 
+    /*
+     *  * It uses dynamic JavaScript constructs that are difficult to analyze
+     *    without interpreting the program or is loaded along with scripts
+     *    that use such constructs.  These constructs are:
+     */
+    /*       * Using the eval function */
     if (astAnalyzer.hasEval()) {
         this.isTrivial = false;
         return this.isTrivial;
     }
+
+    /*       * Calling methods with the square bracket notation */
+
+    /*
+     *       * Using any other construct than a string literal with certain
+     *         methods ('Obj.write', 'Obj.createElement', ...).
+     */
 
     this.isTrivial = isTrivial;
     return this.isTrivial;

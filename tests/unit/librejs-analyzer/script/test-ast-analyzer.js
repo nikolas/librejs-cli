@@ -23,18 +23,26 @@ test('Test the AstAnalyzer constructor', function() {
     ok(new AstAnalyzer(''));
 });
 
-test('hasFunction', function() {
-    var aa = new AstAnalyzer('function hello() { console.log(\'hi\'); }');
-    ok(aa.hasFunction());
+test('createsXhr', function() {
+    var aa = new AstAnalyzer('var a = new XMLHttpRequest();');
+    strictEqual(aa.createsXhr(), true);
 
     aa = new AstAnalyzer('4 + 4;');
-    ok(!aa.hasFunction());
+    strictEqual(aa.createsXhr(), false);
+});
+
+test('hasFunction', function() {
+    var aa = new AstAnalyzer('function hello() { console.log(\'hi\'); }');
+    strictEqual(aa.hasFunction(), true);
+
+    aa = new AstAnalyzer('4 + 4;');
+    strictEqual(aa.hasFunction(), false);
 });
 
 test('hasEval', function() {
     var aa = new AstAnalyzer('eval(2 + 4);');
-    ok(aa.hasEval());
+    strictEqual(aa.hasEval(), true);
 
     aa = new AstAnalyzer('function hello() { console.log(\'hi\'); }');
-    ok(!aa.hasEval());
+    strictEqual(aa.hasEval(), false);
 });

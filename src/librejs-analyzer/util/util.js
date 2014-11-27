@@ -21,18 +21,26 @@
 'use strict';
 
 /**
-    `LibrejsAnalyzer.Util.Util` contains some utility functions.
-*/
+ * `LibrejsAnalyzer.Util.Util` contains some utility functions.
+ *
+ * @constructor
+ */
 function Util(text) {
     this.text = text;
 }
 
 /**
-    Find out if a deeply-nested object contains the given key and value.
-
-    @return {object}
-*/
+ * @function deepFindInObject
+ *
+ * Find out if a deeply-nested object contains the given key and value.
+ *
+ * @return {Object}
+ */
 Util.prototype.deepFindInObject = function(object, key, value) {
+    if (object === null) {
+        return null;
+    }
+
     if (object.hasOwnProperty(key) && object[key] === value) {
         return object;
     }
@@ -51,8 +59,9 @@ Util.prototype.deepFindInObject = function(object, key, value) {
 };
 
 /**
-    @method removeWhitespace
-*/
+ * @method removeWhitespace
+ * @string {String}
+ */
 Util.prototype.removeWhitespace = function(str) {
     return str.replace(/\s+/gmi, '');
 };

@@ -27,6 +27,8 @@ var util = require('../util/util');
 /**
  * `LibrejsAnalyzer.Script.AstAnalysis` is responsible for analyzing the
  * abstract syntax tree of the Script.
+ *
+ * @constructor
  */
 function AstAnalyzer(jsString) {
     this.js = jsString;
@@ -37,7 +39,36 @@ function AstAnalyzer(jsString) {
 module.exports = AstAnalyzer;
 
 /**
- * @return {boolean}
+ * @function createsXhr
+ * @return {Boolean}
+ */
+AstAnalyzer.prototype.createsXhr = function() {
+    /*
+     * The analysis code in many of the AstAnalyzer functions searche the
+     * syntax tree each time with deepFindInObject. When integrating with
+     * LibreJS it will be important to change this around and only do the
+     * search once.
+     */
+    var xhr = util.deepFindInObject(
+        this.node, 'name', 'XMLHttpRequest');
+    if (xhr && xhr.type === 'Identifier') {
+        return true;
+    }
+    xhr = null;
+
+    // Does anything still use ActiveXObject?
+    xhr = util.deepFindInObject(
+        this.node, 'name', 'ActiveXObject');
+    if (xhr && xhr.type === 'Identifier') {
+        return true;
+    }
+
+    return false;
+};
+
+/**
+ * @function hasFunction
+ * @return {Boolean}
  */
 AstAnalyzer.prototype.hasFunction = function() {
     // Search the AST created by acorn for a function expression or declaration
@@ -55,7 +86,8 @@ AstAnalyzer.prototype.hasFunction = function() {
 };
 
 /**
- * @return {boolean}
+ * @function hasEval
+ * @return {Boolean}
  */
 AstAnalyzer.prototype.hasEval = function() {
     // FIXME this works for now but should also check if type == Identifier
