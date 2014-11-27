@@ -55,8 +55,6 @@ module.exports = Script;
  * @return {Report}
  */
 Script.prototype.analyze = function() {
-    this.report.push('Analyzing JS..');
-
     var isTrivial = this._isTrivial();
     var hasLicStartLicense = !!this._findLicStartLicense();
     var hasMagnetLicense = !!this._findMagnetLicense();

@@ -33,30 +33,39 @@ var OPTIONS = {
 
 var exports = {
     /**
+     * @function run
+     *
      * Run the analysis.
      *
-     * Returns true if it passes, false otherwise.
+     * @return {Boolean} - true if it passes, false otherwise.
      */
     run: function(environment) {
         var args = environment.args;
+        console.log(args);
         var passed = false;
 
-        if (args.length > 0) {
-            var arg = args[0];
-            console.log('Analyzing: ' + arg);
-            if (fs.existsSync(arg) && fs.statSync(arg).isFile()) {
-                var contents = fs.readFileSync(arg, {encoding: 'utf-8'});
+        var files = args;
+        if (files.length <= 0) {
+            return false;
+        }
+
+        files.forEach(function(file) {
+            console.log('Analyzing: ' + file);
+            if (fs.existsSync(file) && fs.statSync(file).isFile()) {
+                var contents = fs.readFileSync(file, {encoding: 'utf-8'});
                 var analyzer = new LibrejsAnalyzer({
                     data: contents
                 });
 
                 var report;
-                if (arg.match(/\.js$/)) {
+                if (file.match(/\.js$/)) {
                     report = analyzer.analyzeJs();
-                } else if (arg.match(/\.html$/)) {
+                } else if (file.match(/\.html$/)) {
                     report = analyzer.analyzeHtml();
                 }
-                passed = report.passed;
+                if (!report.passed) {
+                    passed = false;
+                }
                 report.forEach(function(item) {
                     if (typeof item.desc !== 'undefined' &&
                         typeof item.val !== 'undefined'
@@ -67,12 +76,14 @@ var exports = {
                     }
                 });
             }
-        }
+        });
 
         return passed;
     },
 
     /**
+     * @function interpret
+     *
      * Program entrance
      */
     interpret: function() {
