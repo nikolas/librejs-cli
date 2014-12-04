@@ -20,12 +20,20 @@
 
 'use strict';
 
+var sprintf = require('sprintf-js');
+
 /**
-    `LibrejsAnalyzer.Report` is LibrejsAnalyzer's output format.
-*/
+ * @class Report
+ *
+ * LibrejsAnalyzer's output format.
+ */
 function Report(options) {
     // 'js' or 'html'
     this.type = 'js';
+
+    if (options && options.type === 'html') {
+        this.type = 'html';
+    }
 
     // false if nonfree scripts found
     this.passed = false;
@@ -34,3 +42,41 @@ function Report(options) {
 }
 
 module.exports = Report;
+
+/**
+ * @function addItem
+ *
+ * @param {ReportItem} item
+ */
+Report.prototype.addItem = function(item) {
+    this.items.push(item);
+};
+
+/**
+ * @function render
+ *
+ * @return {String}
+ */
+Report.prototype.render = function() {
+    var str = '';
+
+    this.items.forEach(function(item) {
+        if (typeof item.desc !== 'undefined' &&
+            typeof item.val !== 'undefined'
+           ) {
+            str += sprintf.sprintf('%(desc)-30s\t%(val).1s', item);
+        } else if (typeof item === 'string') {
+            str += sprintf.sprintf('%s', item);
+        } else {
+            str += item;
+        }
+        str += '\n';
+    });
+
+    str += sprintf.sprintf('%\'-33s\n', '');
+    str += this.passed ?
+        'Passed' :
+        'Failed (no license found, and nontrivial)';
+
+    return str;
+};

@@ -44,9 +44,9 @@ test('Test the Script constructor', function() {
 test('Test _isTrivial false with function', function() {
     var report = this.script.analyze();
     var item;
-    for (var i = 0; i < report.length; i++) {
-        if (report[i].type === 'triviality') {
-            item = report[i];
+    for (var i = 0; i < report.items.length; i++) {
+        if (report.items[i].type === 'triviality') {
+            item = report.items[i];
             break;
         }
     }
@@ -61,9 +61,9 @@ test('Test _isTrivial false with eval', function() {
 
     var report = this.script.analyze();
     var item;
-    for (var i = 0; i < report.length; i++) {
-        if (report[i].type === 'triviality') {
-            item = report[i];
+    for (var i = 0; i < report.items.length; i++) {
+        if (report.items[i].type === 'triviality') {
+            item = report.items[i];
             break;
         }
     }
@@ -75,9 +75,9 @@ test('Test _isTrivial true', function() {
     var script = new Script({data: js});
     var report = script.analyze();
     var item;
-    for (var i = 0; i < report.length; i++) {
-        if (report[i].type === 'triviality') {
-            item = report[i];
+    for (var i = 0; i < report.items.length; i++) {
+        if (report.items[i].type === 'triviality') {
+            item = report.items[i];
             break;
         }
     }

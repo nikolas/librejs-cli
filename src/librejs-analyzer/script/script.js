@@ -24,6 +24,7 @@ var util = require('../util/util');
 var AstAnalyzer = require('./ast-analyzer');
 var LicStartEndLicense = require('./lic-start-end-license');
 var MagnetLicense = require('./magnet-license');
+var Report = require('../report/report');
 var ReportItem = require('../report/report-item');
 
 /**
@@ -36,7 +37,7 @@ function Script(options) {
         options = {};
     }
     this.data = options.data;
-    this.report = [];
+    this.report = new Report();
 
     // Is this script loaded from a <script> tag, or via XHR?
     this.isExternal = true;
@@ -59,17 +60,17 @@ Script.prototype.analyze = function() {
     var hasLicStartLicense = !!this._findLicStartLicense();
     var hasMagnetLicense = !!this._findMagnetLicense();
 
-    this.report.push(new ReportItem({
+    this.report.addItem(new ReportItem({
         desc: 'Trivial',
         type: 'triviality',
         val: isTrivial
     }));
-    this.report.push(new ReportItem({
+    this.report.addItem(new ReportItem({
         desc: 'Has @licstart/@licend license',
         type: 'lic-start-end',
         val: hasLicStartLicense
     }));
-    this.report.push(new ReportItem({
+    this.report.addItem(new ReportItem({
         desc: 'Has magnet license',
         type: 'magnet-license',
         val: hasMagnetLicense

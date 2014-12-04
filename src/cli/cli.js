@@ -23,7 +23,6 @@
 var cli = require('cli');
 var fs = require('fs');
 var path = require('path');
-var sprintf = require('sprintf-js');
 
 var LibrejsAnalyzer = require('../librejs-analyzer/librejs-analyzer');
 
@@ -66,26 +65,10 @@ var exports = {
                 } else if (file.match(/\.html$/)) {
                     report = analyzer.analyzeHtml();
                 }
-                if (!report.passed) {
+                if (!report || !report.passed) {
                     passed = false;
                 }
-                report.forEach(function(item) {
-                    if (typeof item.desc !== 'undefined' &&
-                        typeof item.val !== 'undefined'
-                       ) {
-                        console.log(
-                            sprintf.sprintf('%(desc)-30s\t%(val).1s', item));
-                    } else if (typeof item === 'string') {
-                        console.log(sprintf.sprintf('%s', item));
-                    } else {
-                        console.log(item);
-                    }
-                });
-                console.log(sprintf.sprintf('%\'-33s', ''));
-                console.log(
-                    report.passed ?
-                        'Passed' :
-                        'Failed (no license found, and nontrivial)');
+                console.log(report.render());
             }
         });
 
