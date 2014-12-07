@@ -60,7 +60,8 @@ Util.prototype.deepFindInObject = function(object, key, value) {
 
 /**
  * @method removeWhitespace
- * @string {String}
+ *
+ * @param {String} str
  */
 Util.prototype.removeWhitespace = function(str) {
     return str.replace(/\s+/gmi, '');

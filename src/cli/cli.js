@@ -33,9 +33,41 @@ var OPTIONS = {
 
 var exports = {
     /**
+     * @function analyzeFile
+     *
+     * Run the analysis on a single file.
+     *
+     * @return {Boolean} - true if it passes, false otherwise.
+     */
+    analyzeFile: function(file) {
+        console.log(file);
+        var passed = true;
+        if (fs.existsSync(file) && fs.statSync(file).isFile()) {
+            var contents = fs.readFileSync(file, {encoding: 'utf-8'});
+            var analyzer = new LibrejsAnalyzer({
+                data: contents
+            });
+
+            var report;
+            if (file.match(/\.js$/)) {
+                report = analyzer.analyzeJs();
+            } else if (file.match(/\.html$/)) {
+                report = analyzer.analyzeHtml();
+            } else {
+                return new Error('Unsupported file type: ' + file);
+            }
+            if (!report || !report.passed) {
+                passed = false;
+            }
+            console.log(report.render());
+        }
+        return passed;
+    },
+
+    /**
      * @function run
      *
-     * Run the analysis.
+     * Run the complete analysis.
      *
      * @return {Boolean} - true if it passes, false otherwise.
      */
@@ -52,23 +84,12 @@ var exports = {
             if (idx !== 0) {
                 console.log();
             }
-            console.log(file);
-            if (fs.existsSync(file) && fs.statSync(file).isFile()) {
-                var contents = fs.readFileSync(file, {encoding: 'utf-8'});
-                var analyzer = new LibrejsAnalyzer({
-                    data: contents
-                });
-
-                var report;
-                if (file.match(/\.js$/)) {
-                    report = analyzer.analyzeJs();
-                } else if (file.match(/\.html$/)) {
-                    report = analyzer.analyzeHtml();
-                }
-                if (!report || !report.passed) {
-                    passed = false;
-                }
-                console.log(report.render());
+            var result = exports.analyzeFile(file);
+            if (result instanceof Error) {
+                console.error(result);
+            }
+            if (result === false) {
+                passed = false;
             }
         });
 
@@ -78,7 +99,7 @@ var exports = {
     /**
      * @function interpret
      *
-     * Program entrance
+     * This is the program entry point.
      */
     interpret: function() {
         cli.setUsage('librejs file.js');
@@ -95,6 +116,9 @@ var exports = {
                     inputStream: process.stdin,
                     outputStream: process.stdout
                 });
+                if (passed instanceof Error) {
+                    console.log('error', passed);
+                }
                 process.exit(passed ? 0 : 2);
             } else {
                 cli.error('No input file');
