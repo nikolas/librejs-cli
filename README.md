@@ -6,6 +6,7 @@ Usage:
 
     librejs file.js
     librejs file.html
+    librejs *.js
 
 
 To run the tests:
