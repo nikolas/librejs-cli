@@ -1,6 +1,6 @@
 /*
  * librejs-cli - A command-line tool for GNU LibreJS
- * Copyright (C) 2014 Nik Nyby
+ * Copyright (C) 2014-2015 Nik Nyby
  *
  * This file is part of librejs-cli.
  *
@@ -32,6 +32,11 @@ function LibrejsAnalyzer(options) {
 
 module.exports = LibrejsAnalyzer;
 
+/**
+ * Analyze this.data as JavaScript.
+ *
+ * @return {Report}
+ */
 LibrejsAnalyzer.prototype.analyzeJs = function() {
     var script = new Script({
         data: this.data
@@ -40,6 +45,11 @@ LibrejsAnalyzer.prototype.analyzeJs = function() {
     return this.report;
 };
 
+/**
+ * Analyze this.data as HTML.
+ *
+ * @return {Report}
+ */
 LibrejsAnalyzer.prototype.analyzeHtml = function() {
     var doc = new Document({
         data: this.data

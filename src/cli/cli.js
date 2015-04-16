@@ -1,6 +1,6 @@
 /*
  * librejs-cli - A command-line tool for GNU LibreJS
- * Copyright (C) 2014 Nik Nyby
+ * Copyright (C) 2014-2015 Nik Nyby
  *
  * This file is part of librejs-cli.
  *
@@ -117,7 +117,7 @@ var exports = {
                     outputStream: process.stdout
                 });
                 if (passed instanceof Error) {
-                    console.log('error', passed);
+                    cli.error('error', passed);
                 }
                 process.exit(passed ? 0 : 2);
             } else {
