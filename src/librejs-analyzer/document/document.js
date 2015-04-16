@@ -20,12 +20,18 @@
 
 'use strict';
 
+var Report = require('../report/report');
+var ReportItem = require('../report/report-item');
+
 /**
  * `LibrejsAnalyzer.Document` is responsible for analyzing an HTML document.
  */
 function Document(options) {
+    if (typeof options === 'undefined') {
+        options = {};
+    }
     this.data = options.data;
-    this.report = [];
+    this.report = new Report();
     this.hasWebLabelsTable = false;
     this.hasWebLabelsLink = false;
 }
@@ -33,18 +39,36 @@ function Document(options) {
 module.exports = Document;
 
 Document.prototype.analyze = function() {
-    this.report.push('Yeah it was HTML');
+    var hasInlineJavascript = this._hasInlineJavascript();
+    var hasWebLabelsLink = this._hasWebLabelsLink();
+    var hasWebLabelsTable = this._hasWebLabelsTable();
+    this.report.addItem(new ReportItem({
+        desc: 'Has inline JavaScript?',
+        type: 'has-inline-js',
+        val: hasInlineJavascript
+    }));
+    this.report.addItem(new ReportItem({
+        desc: 'Has Web Labels link?',
+        type: 'has-weblabels-link',
+        val: hasWebLabelsLink
+    }));
+    this.report.addItem(new ReportItem({
+        desc: 'Has Web Labels table?',
+        type: 'has-weblabels-table',
+        val: hasWebLabelsTable
+    }));
+    this.report.passed = true;
     return this.report;
 };
 
-Document.prototype.findInlineJavascript = function() {
-    return true;
+Document.prototype._hasInlineJavascript = function() {
+    return null;
 };
 
-Document.prototype.findWebLabelsLink = function() {
-    return true;
+Document.prototype._hasWebLabelsLink = function() {
+    return !!this.data.match(/ rel=("|')jslicense("|')/);
 };
 
-Document.prototype.findWebLabelsTable = function() {
-    return true;
+Document.prototype._hasWebLabelsTable = function() {
+    return !!this.data.match(/ id=("|')jslicense-labels1("|')/);
 };
