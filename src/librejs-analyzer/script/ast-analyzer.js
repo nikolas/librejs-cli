@@ -39,7 +39,8 @@ function AstAnalyzer(jsString) {
 module.exports = AstAnalyzer;
 
 /**
- * @function createsXhr
+ * createsXhr
+ *
  * @return {Boolean}
  */
 AstAnalyzer.prototype.createsXhr = function() {
@@ -67,7 +68,8 @@ AstAnalyzer.prototype.createsXhr = function() {
 };
 
 /**
- * @function hasFunction
+ * hasFunction
+ *
  * @return {Boolean}
  */
 AstAnalyzer.prototype.hasFunction = function() {
@@ -86,7 +88,8 @@ AstAnalyzer.prototype.hasFunction = function() {
 };
 
 /**
- * @function hasEval
+ * hasEval
+ *
  * @return {Boolean}
  */
 AstAnalyzer.prototype.hasEval = function() {

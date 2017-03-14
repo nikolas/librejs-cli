@@ -19,30 +19,30 @@
  */
 
 test('Test the AstAnalyzer constructor', function() {
-    ok(new AstAnalyzer('1 + 2;'));
-    ok(new AstAnalyzer(''));
+    assert.ok(new AstAnalyzer('1 + 2;'));
+    assert.ok(new AstAnalyzer(''));
 });
 
 test('createsXhr', function() {
     var aa = new AstAnalyzer('var a = new XMLHttpRequest();');
-    strictEqual(aa.createsXhr(), true);
+    assert.strictEqual(aa.createsXhr(), true);
 
     aa = new AstAnalyzer('4 + 4;');
-    strictEqual(aa.createsXhr(), false);
+    assert.strictEqual(aa.createsXhr(), false);
 });
 
 test('hasFunction', function() {
     var aa = new AstAnalyzer('function hello() { console.log(\'hi\'); }');
-    strictEqual(aa.hasFunction(), true);
+    assert.strictEqual(aa.hasFunction(), true);
 
     aa = new AstAnalyzer('4 + 4;');
-    strictEqual(aa.hasFunction(), false);
+    assert.strictEqual(aa.hasFunction(), false);
 });
 
 test('hasEval', function() {
     var aa = new AstAnalyzer('eval(2 + 4);');
-    strictEqual(aa.hasEval(), true);
+    assert.strictEqual(aa.hasEval(), true);
 
     aa = new AstAnalyzer('function hello() { console.log(\'hi\'); }');
-    strictEqual(aa.hasEval(), false);
+    assert.strictEqual(aa.hasEval(), false);
 });

@@ -23,7 +23,7 @@
 var sprintf = require('sprintf-js');
 
 /**
- * @class Report
+ * Report
  *
  * LibrejsAnalyzer's output format.
  */
@@ -44,7 +44,7 @@ function Report(options) {
 module.exports = Report;
 
 /**
- * @function addItem
+ * addItem
  *
  * @param {ReportItem} item
  */
@@ -53,7 +53,7 @@ Report.prototype.addItem = function(item) {
 };
 
 /**
- * @function render
+ * render
  *
  * @return {String}
  */

@@ -27,11 +27,11 @@ test('Test deepFindInObject', function() {
         }
     };
 
-    ok(util.deepFindInObject(o, 'find', 'me'));
-    ok(!util.deepFindInObject(o, 'find', 'notme'));
+    assert.ok(util.deepFindInObject(o, 'find', 'me'));
+    assert.ok(!util.deepFindInObject(o, 'find', 'notme'));
 });
 
-test('Test removeWhitespace', 2, function() {
-    strictEqual(util.removeWhitespace('a b c'), 'abc');
-    strictEqual(util.removeWhitespace('  \na b\tc   '), 'abc');
+test('Test removeWhitespace', function() {
+    assert.strictEqual(util.removeWhitespace('a b c'), 'abc');
+    assert.strictEqual(util.removeWhitespace('  \na b\tc   '), 'abc');
 });

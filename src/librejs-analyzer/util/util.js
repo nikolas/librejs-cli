@@ -30,11 +30,11 @@ function Util(text) {
 }
 
 /**
- * @function deepFindInObject
+ * deepFindInObject
  *
  * Find out if a deeply-nested object contains the given key and value.
  *
- * @return {Object}
+ * @return {Object|null}
  */
 Util.prototype.deepFindInObject = function(object, key, value) {
     if (object === null) {
@@ -59,7 +59,7 @@ Util.prototype.deepFindInObject = function(object, key, value) {
 };
 
 /**
- * @method removeWhitespace
+ * removeWhitespace
  *
  * @param {String} str
  */

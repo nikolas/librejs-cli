@@ -33,11 +33,11 @@ var OPTIONS = {
 
 var exports = {
     /**
-     * @function analyzeFile
+     * analyzeFile
      *
      * Run the analysis on a single file.
      *
-     * @return {Boolean} - true if it passes, false otherwise.
+     * @return {Boolean|Error} - true if it passes, false otherwise.
      */
     analyzeFile: function(file) {
         console.log(file);
@@ -65,7 +65,7 @@ var exports = {
     },
 
     /**
-     * @function run
+     * run
      *
      * Run the complete analysis.
      *
@@ -97,7 +97,7 @@ var exports = {
     },
 
     /**
-     * @function interpret
+     * interpret
      *
      * This is the program entry point.
      */
