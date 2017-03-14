@@ -49,7 +49,7 @@ function Script(options) {
 module.exports = Script;
 
 /**
- * @function analyze
+ * analyze
  *
  * Run the script analysis.
  *
@@ -85,7 +85,7 @@ Script.prototype.analyze = function() {
 };
 
 /**
- * @function _isTrivial
+ * _isTrivial
  *
  * Check if this script is considered trivial. The following is from the
  * LibreJS 6.0.6 manual.
@@ -163,10 +163,11 @@ Script.prototype._isTrivial = function() {
 };
 
 /**
+ * _findLicStartLicense
+ *
  * Look for licstart/licend license. Warn if more than one is found.
  *
- * @method _findLicStartLicense
- * @return {Object}
+ * @return {Object|null}
  */
 Script.prototype._findLicStartLicense = function() {
     var licStartEndRe =
@@ -181,10 +182,11 @@ Script.prototype._findLicStartLicense = function() {
 };
 
 /**
+ * _findMagnetLicense
+ *
  * Look for magnet link. Warn if more than one is found.
  *
- * @method _findMagnetLicense
- * @return {Object}
+ * @return {Object|null}
  */
 Script.prototype._findMagnetLicense = function() {
     var licenseMagnet = /.*@license ?(magnet\:\?xt=urn\:btih\:[0-9A-Za-z]+).*/;

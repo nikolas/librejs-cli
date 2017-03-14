@@ -19,9 +19,9 @@
  */
 
 test('Test that cli works', function() {
-    ok(run);
-    ok(interpret);
+    assert.ok(run);
+    assert.ok(interpret);
 
-    equal(typeof run, 'function');
-    equal(typeof interpret, 'function');
+    assert.equal(typeof run, 'function');
+    assert.equal(typeof interpret, 'function');
 });

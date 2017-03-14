@@ -30,19 +30,29 @@ QUnit.module('Script module', {
 });
 
 test('Test the Script constructor', function() {
-    ok(this.script);
+    var js = fs.readFileSync('./tests/mock/js/shelltypist.js', {
+        encoding: 'utf-8'
+    });
+    var script = new Script({data: js});
+
+    assert.ok(script);
 
     var newScript = new Script({
         data: 'console.log("Hello!");'
     });
-    ok(newScript);
+    assert.ok(newScript);
 
     var scriptConstructorWithNoData = new Script();
-    ok(scriptConstructorWithNoData);
+    assert.ok(scriptConstructorWithNoData);
 });
 
 test('Test _isTrivial false with function', function() {
-    var report = this.script.analyze();
+    var js = fs.readFileSync('./tests/mock/js/shelltypist.js', {
+        encoding: 'utf-8'
+    });
+    var script = new Script({data: js});
+
+    var report = script.analyze();
     var item;
     for (var i = 0; i < report.items.length; i++) {
         if (report.items[i].type === 'triviality') {
@@ -50,16 +60,16 @@ test('Test _isTrivial false with function', function() {
             break;
         }
     }
-    strictEqual(item.val, false);
+    assert.strictEqual(item.val, false);
 });
 
 test('Test _isTrivial false with eval', function() {
     var js = fs.readFileSync('./tests/mock/js/eval.js', {
         encoding: 'utf-8'
     });
-    this.script = new Script({data: js});
+    var script = new Script({data: js});
 
-    var report = this.script.analyze();
+    var report = script.analyze();
     var item;
     for (var i = 0; i < report.items.length; i++) {
         if (report.items[i].type === 'triviality') {
@@ -67,7 +77,7 @@ test('Test _isTrivial false with eval', function() {
             break;
         }
     }
-    strictEqual(item.val, false);
+    assert.strictEqual(item.val, false);
 });
 
 test('Test _isTrivial true', function() {
@@ -81,13 +91,13 @@ test('Test _isTrivial true', function() {
             break;
         }
     }
-    strictEqual(item.val, true);
+    assert.strictEqual(item.val, true);
 });
 
 test('Test _findLicStartLicense', function() {
-    ok(true);
+    assert.ok(true);
 });
 
 test('Test _findMagnetLink', function() {
-    ok(true);
+    assert.ok(true);
 });

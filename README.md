@@ -17,3 +17,6 @@ Usage:
 To run the tests:
 
     npm test
+
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/nikolas/librejs-cli.svg)](https://greenkeeper.io/)
