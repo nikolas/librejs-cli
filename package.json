@@ -20,13 +20,13 @@
   "author": "Nik Nyby",
   "license": "GPL-3.0+",
   "dependencies": {
-    "acorn": "^1.0.3",
-    "cli": "^0.6.6",
+    "acorn": "^4.0.11",
+    "cli": "^1.0.1",
     "sprintf-js": "^1.0.2"
   },
   "devDependencies": {
-    "jscs": "^1.12.0",
+    "jscs": "^3.0.7",
     "jshint": "^2.7.0",
-    "qunit": "^0.7.6"
+    "qunit": "^1.0.0"
   }
 }
