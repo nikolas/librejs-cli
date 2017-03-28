@@ -20,7 +20,7 @@
   "author": "Nik Nyby",
   "license": "GPL-3.0+",
   "dependencies": {
-    "acorn": "^4.0.11",
+    "acorn": "^5.0.0",
     "cli": "^1.0.1",
     "sprintf-js": "^1.0.2"
   },
