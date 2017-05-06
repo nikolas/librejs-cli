@@ -22,7 +22,7 @@
   "dependencies": {
     "acorn": "^5.0.0",
     "cli": "^1.0.1",
-    "sprintf-js": "^1.0.2"
+    "sprintf-js": "^1.1.0"
   },
   "devDependencies": {
     "jscs": "^3.0.7",
