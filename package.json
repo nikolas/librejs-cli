@@ -27,6 +27,6 @@
   "devDependencies": {
     "jscs": "^3.0.7",
     "jshint": "^2.7.0",
-    "qunit": "^1.0.0"
+    "qunit": "^2.4.1"
   }
 }
